@@ -15,7 +15,7 @@ public class BulletManager : MonoBehaviour
     {
         bulletPool = new Queue<GameObject>(); // creates an empty Queue
 
-        //BuildBulletPool();
+        BuildBulletPool();
     }
 
     /// <summary>

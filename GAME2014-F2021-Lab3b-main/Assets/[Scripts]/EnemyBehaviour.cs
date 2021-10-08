@@ -22,7 +22,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         randomSpeed = Random.Range(movementBounds.min, movementBounds.max);
         startingPoint = Random.Range(startingRange.min, startingRange.max);
-        bulletManager = GameObject.FindObjectOfType<BulletManager>();
+        bulletManager = GameObject.Find("GameController").GetComponent<BulletManager>();
     }
 
     // Update is called once per frame

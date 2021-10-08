@@ -10,13 +10,17 @@ public class PlayerBehaviour : MonoBehaviour
     [Range(0.0f, 1.0f)]
     public float decay;
     public Bounds bounds;
-    
+    public Transform bulletSpawn;
+
+    private BulletManager bulletManager;
+
     private Rigidbody2D rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        bulletManager = GameObject.Find("PlayerBullets").GetComponent<BulletManager>();
     }
 
     // Update is called once per frame
@@ -24,6 +28,11 @@ public class PlayerBehaviour : MonoBehaviour
     {
         Move();
         CheckBounds();
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            bulletManager.GetBullet(bulletSpawn.position);
+        }
     }
 
     private void Move()
@@ -33,6 +42,7 @@ public class PlayerBehaviour : MonoBehaviour
         rigidbody.AddForce(new Vector2(x * horizontalForce, 0.0f));
 
         rigidbody.velocity *= (1.0f - decay);
+
     }
 
     private void CheckBounds()

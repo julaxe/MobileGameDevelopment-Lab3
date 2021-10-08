@@ -5,16 +5,23 @@ using UnityEngine;
 public class BulletBehaviour : MonoBehaviour
 {
     [Header("Bullet Movement")]
-    [Range(0.0f, 0.5f)]
+    [Range(-0.5f, 0.5f)]
     public float speed;
     public Bounds bulletBounds;
+    public bool isPlayerBullet = false;
 
     private BulletManager bulletManager;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        bulletManager = GameObject.FindObjectOfType<BulletManager>();
+        if (isPlayerBullet)
+        {
+            bulletManager = GameObject.Find("PlayerBullets").GetComponent<BulletManager>();
+        }
+        else
+        {
+            bulletManager = GameObject.Find("GameController").GetComponent<BulletManager>();
+        }
     }
 
     // Update is called once per frame
@@ -32,9 +39,11 @@ public class BulletBehaviour : MonoBehaviour
     private void CheckBounds()
     {
         if (transform.position.y < bulletBounds.max)
+        { 
+            bulletManager.ReturnBullet(this.gameObject);
+        }
+        if (transform.position.y > bulletBounds.min)
         {
-            //Destroy(this.gameObject);
-
             bulletManager.ReturnBullet(this.gameObject);
         }
     }
